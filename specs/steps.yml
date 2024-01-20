@@ -135,7 +135,7 @@ SVJLimitSettingStep:
     script: |
       source /release_setup.sh
       echo {input_limitsetting}
-      echo SUKANYA {fitbghisto_file_path}
+      echo {fitbghisto_file_path}
       mkdir -p final/Histograms output
       cp -r {input_limitsetting} output/output.root
       cp -r {fitbghisto_file_path} final/Histograms/final_bgonly.root
@@ -158,14 +158,3 @@ SVJLimitSettingStep:
     - KRB5Auth
     - kerberos: true
 
-
-
-#      xrdcp {dxaod_file_mc16a} input_file.root
-
-#      mkdir input_file
-#      for f in $(xrdfs eosproject.cern.ch ls {dxaod_file_mc16a}); do
-#        xrdcp root://eosproject.cern.ch//$f input_file/.
-#      done
-#      find "$(pwd)/input_file/" -type f > input.txt
-#      echo ----------SUKANYA--------
-#      more input.txt
