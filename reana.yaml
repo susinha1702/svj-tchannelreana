@@ -1,0 +1,32 @@
+version: 0.8.1
+inputs:
+  directories:
+    - specs/
+  parameters:
+    dxaod_file_mc16a: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/mc16_13TeV/mc16a/mc16_13TeV.515624.MGPy8EG_A14N30NLO_SVJTChanL65_2500_4.deriv.DAOD_EXOT27.e8307_s3126_r9364_p5173/DAOD_EXOT27.30705831._000001.pool.root.1'
+    dxaod_file_mc16d: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/mc16_13TeV/mc16d/mc16_13TeV.515624.MGPy8EG_A14N30NLO_SVJTChanL65_2500_4.deriv.DAOD_EXOT27.e8307_s3126_r10201_p5173/DAOD_EXOT27.30706117._000001.pool.root.1'
+    dxaod_file_mc16e: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/mc16_13TeV/mc16e/mc16_13TeV.515624.MGPy8EG_A14N30NLO_SVJTChanL65_2500_4.deriv.DAOD_EXOT27.e8307_s3126_r10724_p5173/DAOD_EXOT27.30706275._000002.pool.root.1'
+    prw_file_mc16a: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/testPRW/prwL65MCA.root'
+    prw_file_mc16d: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/testPRW/prwL65MCD.root'
+    prw_file_mc16e: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/testPRW/prwL65MCE.root'
+    tdp_file_path: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/testTDP/tmp_tdp.data'
+    fitbghisto_file_path: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/trexhistos/final_histos.root'
+    dsid: '123456'
+    wta: '0.2552772937'
+    wtd: '0.2718871857'
+    wte: '0.3105668574'
+
+workflow:
+  type: yadage
+  file: specs/workflow.yml
+  resources:
+   kerberos: true
+   cvmfs:
+     - atlas.cern.ch
+
+outputs:
+  directories:
+    - SVJLimitSettingStep/output_limitsetting/
+
+
+#    fitbghisto_file_path: 'root://eosproject.cern.ch///eos/project/r/recast/atlas/ANA-EXOT-2022-37/trexhistos/final_histos.root'

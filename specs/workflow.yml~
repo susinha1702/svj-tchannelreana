@@ -1,0 +1,74 @@
+stages:
+- name: SVJEventSelectionStep1_mc16a
+  dependencies: [init]
+  scheduler: 
+    scheduler_type: singlestep-stage
+    parameters: 
+      AT_config_file: 'config_files/config_mc16a.txt'
+      dxaod_file_mc16a: {step: init, output: dxaod_file_mc16a}
+      prw_file_mc16a: {step: init, output: prw_file_mc16a}
+      tdp_file_path: {step: init, output: tdp_file_path}
+      output_step1: '{workdir}/output_step1'
+    step: {$ref: 'specs/steps.yml#/SVJEventSelectionStep1_mc16a'}
+
+- name: SVJEventSelectionStep1_mc16d
+  dependencies: [init]
+  scheduler:
+    scheduler_type: singlestep-stage
+    parameters:
+      AT_config_file: 'config_files/config_mc16d.txt'
+      dxaod_file_mc16d: {step: init, output: dxaod_file_mc16d}
+      prw_file_mc16d: {step: init, output: prw_file_mc16d}
+      tdp_file_path: {step: init, output: tdp_file_path}
+      output_step1: '{workdir}/output_step1'
+    step: {$ref: 'specs/steps.yml#/SVJEventSelectionStep1_mc16d'}
+
+- name: SVJEventSelectionStep1_mc16e
+  dependencies: [init]
+  scheduler:
+    scheduler_type: singlestep-stage
+    parameters:
+      AT_config_file: 'config_files/config_mc16e.txt'
+      dxaod_file_mc16e: {step: init, output: dxaod_file_mc16e}
+      prw_file_mc16e: {step: init, output: prw_file_mc16e}
+      tdp_file_path: {step: init, output: tdp_file_path}
+      output_step1: '{workdir}/output_step1'
+    step: {$ref: 'specs/steps.yml#/SVJEventSelectionStep1_mc16e'}
+
+- name:   SVJEventSelectionStep2
+  dependencies: [init, SVJEventSelectionStep1_mc16a]
+  scheduler: 
+    scheduler_type: singlestep-stage
+    parameters:
+      input_step2_mc16a: {step: SVJEventSelectionStep1_mc16a, output: selected_signal_mc16a}
+      input_step2_mc16d: {step: SVJEventSelectionStep1_mc16d, output: selected_signal_mc16d}
+      input_step2_mc16e: {step: SVJEventSelectionStep1_mc16e, output: selected_signal_mc16e}
+      dsid: {step: init, output: dsid}
+      wta: {step: init, output: wta}
+      wtd: {step: init, output: wtd}
+      wte: {step: init, output: wte}
+      output_step2: '{workdir}/output_step2.root'
+    step: {$ref: 'specs/steps.yml#/SVJEventSelectionStep2'}
+
+- name: ruciostep
+  dependencies: [init]
+  scheduler:
+    scheduler_type: singlestep-stage
+    parameters:
+      outputfile: '{workdir}/outputfile.root'
+    step: {$ref: 'specs/steps.yml#/ruciostep'}
+
+
+- name: SVJLimitSettingStep
+  dependencies: [ruciostep, SVJEventSelectionStep2]
+  scheduler:
+    scheduler_type: singlestep-stage
+    parameters:
+      input_limitsetting: {step: SVJEventSelectionStep2, output: selected_signal}
+      myworkdir: '{workdir}'
+      fitbghisto_file_path: {step: ruciostep, output: outputfile}
+      output_limitsetting: '{workdir}/output_limitsetting'
+    step: {$ref: 'specs/steps.yml#/SVJLimitSettingStep'}
+
+#fitbghisto_file_path: {step: ruciostep, output: output_file}
+#fitbghisto_file_path: {step: init, output: fitbghisto_file_path}
